@@ -8,6 +8,11 @@ import ssl
 
 logging.basicConfig(level=logging.INFO)
 
+from dotenv import load_dotenv
+import os
+load_dotenv()
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+
 # Бот пен диспетчерді жасау
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
@@ -17,7 +22,7 @@ dp.include_router(level_test.router)
 
 async def main():
     # SSL контекстін жасау және сертификатты қосу
-  ssl_context = ssl.create_default_context(cafile="C:/python/engbot/Unified_State_Internet_Access_Gateway.cer") # PEM файлының жолы
+    ssl_context = ssl.create_default_context() # PEM файлының жолы
     session = aiohttp.ClientSession(connector=aiohttp.TCPConnector(ssl=ssl_context))
     
     # Ботқа сессияны орнату
